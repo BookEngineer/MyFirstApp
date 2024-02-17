@@ -12,7 +12,16 @@
           <h3 class="card-title"><%= review.book_title %></h3>
           <p class="card-text"><strong>著者:</strong> <%= review.book_author %></p>
           <p class="card-text"><strong>投稿者:</strong> <%= review.reviewer %></p>
-          <p class="card-text"><strong>評価:</strong> <%= review.rating %></p>
+          <p class="card-text">
+            <strong>評価:</strong> 
+            <% 1.upto(5) do |star| %>
+              <% if star <= review.rating %>
+                <i class="fas fa-star"></i>
+              <% else %>
+                <i class="far fa-star"></i>
+              <% end %>
+            <% end %>
+          </p>
           <p class="card-text"><strong>読了日:</strong> <%= review.read_date %></p>
           <p class="card-text"><strong>レビュー内容:</strong> <%= review.content %></p>
         </div>

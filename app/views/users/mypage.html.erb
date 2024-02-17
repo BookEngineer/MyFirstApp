@@ -14,6 +14,7 @@
           <p class="card-text"><strong>評価:</strong> <%= review.rating %></p>
           <p class="card-text"><strong>読了日:</strong> <%= review.read_date %></p>
           <p class="card-text"><strong>内容:</strong> <%= review.content %></p>
+          <%= button_to "削除", review_path(review.id), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
         </div>
       <% end %>
     </div>

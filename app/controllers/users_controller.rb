@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   def mypage
     @user = current_user
     @reviews = @user.reviews
+    @review = current_user.reviews.find_by(id: params[:review_id])
   end
 
   def review_detail
