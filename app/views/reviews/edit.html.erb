@@ -1,10 +1,14 @@
-<!-- app/views/reviews/edit.html.erb -->
-
 <h1>レビューを編集する</h1>
 
-<%= form_with(model: @review, url: review_path(@review), method: :patch) do |form| %>
+<% if @review.book_image_url.present? %>
+  <%= image_tag @review.book_image_url, class: "img-fluid mb-3" %>
+<% end %>
+<h2 class="mb-2"><%= @review.book_title %></h2>
+<p class="mb-4"><strong>著者:</strong> <%= @review.book_author %></p>
+
+<%= form_with(model: @review, url: review_path(@review), method: :patch, html: { class: 'needs-validation', novalidate: '' }) do |form| %>
   <% if @review.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(@review.errors.count, "error") %> prohibited this review from being saved:</h2>
 
       <ul>
@@ -15,44 +19,32 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :reviewer %>
-    <%= form.text_field :reviewer, value: current_user.name, readonly: true %>
+  <%= form.hidden_field :reviewer, value: current_user.name %>
+  <%= form.hidden_field :book_title, value: @review.book_title %>
+  <%= form.hidden_field :book_author, value: @review.book_author %>
+  <div class="form-group mb-3">
+    <%= form.label "評価", class: 'form-label' %>
+    <%= form.select :rating, (1..5), { selected: @review.rating }, { class: 'form-select' } %>
   </div>
 
-  <div class="field">
-    <%= form.label :book_title %>
-    <%= form.text_field :book_title, value: @review.book_title %>
+  <div class="form-group mb-3">
+    <%= form.label "読了日", class: 'form-label' %>
+    <%= form.date_field :read_date, value: @review.read_date, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :book_author %>
-    <%= form.text_field :book_author, value: @review.book_author %>
+  <div class="form-group mb-3">
+    <%= form.label "レビュー", class: 'form-label' %>
+    <%= form.text_area :content, value: @review.content, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :rating %>
-    <%= form.select :rating, (1..5), selected: @review.rating %>
-  </div>
-
-  <div class="field">
-    <%= form.label :read_date %>
-    <%= form.date_field :read_date, value: @review.read_date %>
-  </div>
-
-  <div class="field">
-    <%= form.label :content %>
-    <%= form.text_area :content, value: @review.content %>
-  </div>
-
-  <div class="field">
+  <div class="d-none">
     <%= form.hidden_field :book_image_url, value: @review.book_image_url %>
     <%= form.hidden_field :user_id, value: current_user.id %>
   </div>
 
-  <div class="actions">
-    <%= form.submit "更新する" %>
+  <div class="actions mt-3">
+    <%= form.submit "更新する", class: 'btn btn-primary' %>
   </div>
 <% end %>
 
-<%= link_to "キャンセル", mypage_user_path(current_user) %>
+<%= link_to "キャンセル", mypage_user_path(current_user), class: 'btn btn-secondary mt-2' %>

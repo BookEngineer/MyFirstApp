@@ -1,19 +1,22 @@
-<h1 class="display-4">ようこそ！</h1>
-<p class="lead">これはホームページです。</p>
 
-<h2 class="mt-4 mb-3">最新のレビュー一覧</h2>
-<% @reviews.each do |review| %>
-  <%= link_to review_path(review), class: "card mb-3" do %>
-    <div class="card-body">
-      <% if review.book_image_url.present? %>
-        <%= image_tag review.book_image_url, class: "img-fluid mb-3" %>
+
+<h2 class="mt-4 mb-3">最新のレビュー</h2>
+<div class="row">
+  <% @reviews.each do |review| %>
+    <div class="col-md-6">
+      <%= link_to review_path(review), class: "card mb-3" do %>
+        <div class="card-body">
+          <% if review.book_image_url.present? %>
+            <%= image_tag review.book_image_url, class: "img-fluid mb-3" %>
+          <% end %>
+          <h3 class="card-title"><%= review.book_title %></h3>
+          <p class="card-text"><strong>著者:</strong> <%= review.book_author %></p>
+          <p class="card-text"><strong>投稿者:</strong> <%= review.reviewer %></p>
+          <p class="card-text"><strong>評価:</strong> <%= review.rating %></p>
+          <p class="card-text"><strong>読了日:</strong> <%= review.read_date %></p>
+          <p class="card-text"><strong>レビュー内容:</strong> <%= review.content %></p>
+        </div>
       <% end %>
-      <h3 class="card-title"><%= review.book_title %></h3>
-      <p class="card-text"><strong>著者:</strong> <%= review.book_author %></p>
-      <p class="card-text"><strong>投稿者:</strong> <%= review.reviewer %></p>
-      <p class="card-text"><strong>評価:</strong> <%= review.rating %></p>
-      <p class="card-text"><strong>読了日:</strong> <%= review.read_date %></p>
-      <p class="card-text"><strong>レビュー内容:</strong> <%= review.content %></p>
     </div>
   <% end %>
-<% end %>
+</div>
