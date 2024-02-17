@@ -1,0 +1,7 @@
+<h1><%= @review.book_title %></h1>
+<p><strong>著者:</strong> <%= @review.book_author %></p>
+<p><strong>評価:</strong> <%= @review.rating %></p>
+<p><strong>読了日:</strong> <%= @review.read_date %></p>
+<p><strong>内容:</strong> <%= @review.content %></p>
+<%= link_to "編集", edit_review_path(@review), class: "btn btn-primary" %>
+<%= button_to "削除", review_path(@review), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
