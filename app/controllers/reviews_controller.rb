@@ -26,7 +26,7 @@ class ReviewsController < ApplicationController
   def destroy
     @review = current_user.reviews.find(params[:id])
     @review.destroy
-    redirect_to root_path, notice: "レビューが削除されました"
+    redirect_to mypage_user_path(current_user), notice: "レビューが削除されました"
   end
 
   def edit
@@ -35,7 +35,7 @@ class ReviewsController < ApplicationController
   def update
     @review = Review.find(params[:id])
     if @review.update(review_params)
-      redirect_to root_path, notice: "レビューが更新されました"
+      redirect_to mypage_user_path(current_user), notice: "レビューが更新されました"
     else
       render :edit
     end

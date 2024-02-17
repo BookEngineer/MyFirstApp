@@ -24,7 +24,7 @@
           <span class="navbar-text">
             <%= current_user.name %>でログイン中
           </span>
-          <%= link_to "マイページ", users_mypage_path, class: "btn btn-outline-primary ms-2" %>
+          <%= link_to "マイページ", mypage_user_path(current_user), class: "btn btn-outline-primary ms-2" %>
           <%= link_to "ログアウト", destroy_user_session_path, method: :get, class: "btn btn-outline-danger ms-2" %>
         <% else %>
           <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-success" %>

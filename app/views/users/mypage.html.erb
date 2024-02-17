@@ -2,14 +2,13 @@
 
 <h2 class="mt-4 mb-3">投稿したレビュー一覧</h2>
 <% @reviews.each do |review| %>
-  <div class="card mb-3">
+  <%= link_to review_detail_user_path(@user, review_id: review.id), class: "card mb-3" do %>
     <div class="card-body">
       <h3 class="card-title"><%= review.book_title %></h3>
       <p class="card-text"><strong>著者:</strong> <%= review.book_author %></p>
       <p class="card-text"><strong>評価:</strong> <%= review.rating %></p>
       <p class="card-text"><strong>読了日:</strong> <%= review.read_date %></p>
       <p class="card-text"><strong>内容:</strong> <%= review.content %></p>
-      <%= link_to "詳細", review_path(review), class: "btn btn-primary" %>
     </div>
-  </div>
+  <% end %>
 <% end %>
