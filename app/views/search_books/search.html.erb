@@ -1,0 +1,22 @@
+<h1>本を検索</h1>
+
+<%= form_tag search_books_search_path, method: :get, class: "form-inline my-4" do %>
+  <%= text_field_tag :query, params[:query], placeholder: "検索語句を入力してください", class: "form-control mr-2" %>
+  <%= submit_tag "検索", class: "btn btn-primary" %>
+<% end %>
+
+<% if @results.present? %>
+  <h2 class="mt-4">検索結果</h2>
+  <% @results["items"].each do |item| %>
+    <% if item["volumeInfo"].present? && item["volumeInfo"]["title"].present? && item["volumeInfo"]["authors"].present? && item["volumeInfo"]["imageLinks"].present? %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h3 class="card-title"><%= item["volumeInfo"]["title"] %></h3>
+          <%= image_tag item["volumeInfo"]["imageLinks"]["thumbnail"], class: "img-fluid" %>
+          <p class="card-text">著者: <%= item["volumeInfo"]["authors"].join(", ") %></p>
+          <%= link_to "レビューを作成する", new_review_path(review: { book_title: item["volumeInfo"]["title"], book_author: item["volumeInfo"]["authors"].join(", "), book_image_url: item["volumeInfo"]["imageLinks"]["thumbnail"] }), class: "btn btn-outline-secondary" %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,0 +1,49 @@
+
+<% if @book_image_url.present? %>
+  <%= image_tag @book_image_url, class: "img-fluid mb-3" %>
+<% end %>
+<h1><%= @book_title %>のレビュー</h1>
+<h4>著者: <%= @book_author %></h4>
+
+
+<%= form_with(model: @review, url: reviews_path, method: :post, class: "needs-validation", novalidate: true) do |form| %>
+  <% if @review.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(@review.errors.count, "error") %> prohibited this review from being saved:</h2>
+
+      <ul>
+        <% @review.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :reviewer, value: current_user.name %>
+  <%= form.hidden_field :book_title, value: @book_title %>
+  <%= form.hidden_field :book_author, value: @book_author %>
+
+  <div class="mb-3">
+    <%= form.label :rating, class: "form-label" %>
+    <%= form.select :rating, (1..5), {}, { class: "form-select" } %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :read_date, class: "form-label" %>
+    <%= form.date_field :read_date, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :content, class: "form-label" %>
+    <%= form.text_area :content, class: "form-control" %>
+  </div>
+
+  <%= form.hidden_field :book_image_url, value: @book_image_url %>
+  <%= form.hidden_field :user_id, value: current_user.id %>
+
+  <div class="mb-3">
+    <%= form.submit "レビューを作成する", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<%= link_to "キャンセル", root_path, class: "btn btn-secondary" %>
